@@ -1,0 +1,27 @@
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  font-family: Verdana, serif;
+  margin: 0;
+}
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// button
+
+button {
+  cursor: pointer;
+  outline: none;
+  height: 40px;
+  margin: 10px 0;
+}

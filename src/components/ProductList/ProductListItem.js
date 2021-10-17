@@ -1,66 +1,50 @@
 import productOperations from "../../redux/product/product-operations";
-import { useDispatch } from 'react-redux';
-import React from 'react';
-import Modal from 'react-modal';
+import { useDispatch } from "react-redux";
+import React from "react";
+import Modal from "react-modal";
 import { Link } from "react-router-dom";
-import '../../index.css'
+import styles from "./productList.module.scss";
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-    },
-};
-Modal.setAppElement('#modal');
+Modal.setAppElement("#modal");
 
-export default function ProductListItem({product}) {
-    const dispatch = useDispatch();
-   const onDelete = id => dispatch(productOperations.deleteProduct(id));
+export default function ProductListItem({ product }) {
+  const dispatch = useDispatch();
+  const onDelete = (id) => dispatch(productOperations.deleteProduct(id));
 
-    let subtitle;
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+  return (
+    <>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className={styles.modal}
+        contentLabel="Example Modal"
+      >
+        <h2 className={styles.modal_title}>Are you sure?</h2>
+        <div className={styles.button_container}>
+          <button onClick={() => onDelete(product.id)}>Yes </button>
+          <button onClick={closeModal}>No</button>
+        </div>
+      </Modal>
 
-    function openModal() {
-        setIsOpen(true);
-    }
-
-    function afterOpenModal() {
-        subtitle.style.color = '#f00';
-    }
-
-    function closeModal() {
-        setIsOpen(false);
-    }
-    return (
-<>
-    <div>
-        <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
-            onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Example Modal"
-        >
-            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Are you sure?</h2>
-                <button onClick={() => onDelete(product.id)}>Yes</button>
-                <button onClick={closeModal}>No</button>
-        </Modal>
-    </div>
-
-    <li>
-        <Link to={
-        {pathname: `/product/${product.id}`,
-        state: {product}
-        }
-        } >
-            {product.name}
+      <li className={styles.productCard}>
+        <img
+          className={styles.productCardImg}
+          src={product.imageUrl}
+          alt={product.name}
+        />
+        <Link to={{ pathname: `/product/${product.id}`, state: { product } }}>
+          {product.name}
         </Link>
-        <button onClick={openModal} >DELETE</button>
-    </li></>
-    );
+        <p>count: {product.count}</p>
+        <button onClick={openModal}>DELETE</button>
+      </li>
+    </>
+  );
 }
-

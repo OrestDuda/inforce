@@ -1,0 +1,29 @@
+.modal {
+  width: 25%;
+  position: absolute ;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  border: 2px solid grey;
+  padding: 50px;
+}
+.modal_title {
+  text-align: center;
+}
+.form {
+  display: grid;
+}
+.form > input {
+  margin-bottom: 10px;
+  height: 40px;
+}
+.form > button {
+  height: 40px;
+  margin: 10px 0;
+}
+.button_container {
+  display: flex;
+  justify-content: space-evenly;
+}
